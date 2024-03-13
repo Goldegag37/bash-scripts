@@ -4,14 +4,11 @@
 
 # feel free to use code from this script anywhere.
 
-# known issues:
-# find_roku_ip lists 'exit' '' (the ip list) and i dont know why.
-
 declare -g roku_ip
 
-roku_ip='192.168.0.100'
+roku_ip=192.168.0.101
 
-first_run=true
+first_run=false
 
 if ! curl --version >/dev/null 2>&1;then
 echo "curl required for script to run, please install curl and try again."; exit
@@ -140,19 +137,18 @@ type() {
 
 
 macro() {
-    #press Home
     echo
     case $1  in
         '') echo "Error: no macro id provided.";;
 
-        'cg') press "Home"; sleep 3; press "Up" 2; press "Select"; 
+        'curiousGeorge') press "Home"; sleep 3; press "Up" 2; press "Select"; 
               type "Curious George"; press "Right" 5; sleep 1.2; 
               press "Right Select" ; sleep 1; press "Select";;
 
-        'bl') launch 837; sleep 3; press "Left Up Right"; 
+        'bluey') launch 837; sleep 4; press "Left Up Right"; 
         type "Bluey Official Channel"; sleep 1.5; press "Down" 5; press "Right Select"; sleep 1.7; press Down 3; press Select ;;
 
-        'nxt') press "Down Down Select" ;; #use on a yt vid to go to the next one
+        'nextYtVid') press "Down Down Select" ;;
 
         'test') 
                 device_info="$(curl -s --connect-timeout 1 --max-time 1 "http://$roku_ip:8060/query/device-info" >/dev/null 2>&1)"; echo "$device_info";;
@@ -204,11 +200,11 @@ roku_input() {
             '2') echo -n "Launch YouTube"; launch 837 ;;
             '3') echo -n "Launch name"; macro ;;
             '4') echo -n "Launch name"; macro ;;
-            '5') echo -n "Next"; macro nxt ;;
+            '5') echo -n "Next"; macro nextYtVid ;;
             '6') echo -n "Launch name"; macro id ;;
             '7') echo -n "Launch name"; macro test ;;
             '8') echo -n "Launch bluey"; macro bl ;;
-            '9') echo -n "Play Curious George"; macro cg;;
+            '9') echo -n "Play Curious George"; macro curiousGeorge;;
             '0') echo -n "Launch name"; launch id ;;
             
             # Roku tv
@@ -236,7 +232,7 @@ roku_input() {
 if [ $first_run = true ]; then
     select option in  "Search for Roku" "Enter IP Address"; do
         case $option in
-            "Search for Roku") find_roku_ip;;
+            "Search for Roku") echo "searching for roku ip address..."; find_roku_ip;;
             "Enter IP Address") edit_ip;;
             "Quit")  exit ;;
         esac
