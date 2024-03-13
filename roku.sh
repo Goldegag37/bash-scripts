@@ -4,11 +4,14 @@
 
 # feel free to use code from this script anywhere.
 
+# known issues:
+# find_roku_ip lists 'exit' '' (the ip list) and i dont know why.
+
 declare -g roku_ip
 
-roku_ip=192.168.0.101
+roku_ip='192.168.0.100'
 
-first_run=false
+first_run=true
 
 if ! curl --version >/dev/null 2>&1;then
 echo "curl required for script to run, please install curl and try again."; exit
@@ -149,7 +152,7 @@ macro() {
         'bl') launch 837; sleep 3; press "Left Up Right"; 
         type "Bluey Official Channel"; sleep 1.5; press "Down" 5; press "Right Select"; sleep 1.7; press Down 3; press Select ;;
 
-        'nxt') press "Down Down Select" ;;
+        'nxt') press "Down Down Select" ;; #use on a yt vid to go to the next one
 
         'test') 
                 device_info="$(curl -s --connect-timeout 1 --max-time 1 "http://$roku_ip:8060/query/device-info" >/dev/null 2>&1)"; echo "$device_info";;
@@ -233,7 +236,7 @@ roku_input() {
 if [ $first_run = true ]; then
     select option in  "Search for Roku" "Enter IP Address"; do
         case $option in
-            "Search for Roku") echo "searching for roku ip address..."; find_roku_ip;;
+            "Search for Roku") find_roku_ip;;
             "Enter IP Address") edit_ip;;
             "Quit")  exit ;;
         esac
