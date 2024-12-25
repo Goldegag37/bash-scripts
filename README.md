@@ -10,7 +10,7 @@ Home > Settings > System > Advanced System Settings > Control by moble apps > Ne
 on first run it will ask you if you want to automaticaly find the IP of your roku or input the IP.     
 there are more commands than displayed; read the code for roku_input to find them
 
-##thirdtube-import.sh
+## thirdtube-import.sh
 a script to copy your youtube subscriptions to thirdtube.
 how to use:
 1. go to https://takeout.google.com/
@@ -22,4 +22,4 @@ how to use:
 7. copy Takeout/Youtube and Youtube Music/subscriptions/subscriptions.csv to the same folder as the script
 8. run the script
 9. copy subscription.json to
-#please hold while i fix the script.
+# script might be broken, not sure.
